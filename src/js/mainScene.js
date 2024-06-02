@@ -27,7 +27,7 @@ export function createMainScene(engine) {
 
     mainScene.camera.strategy.lockToActor(playerGoose);
 
-    const finishLineBoundary = new FinishLineBoundary(490, 640, 210, 10);
+    const finishLineBoundary = new FinishLineBoundary(490, 630, 210, 10);
     mainScene.add(finishLineBoundary);
 
     const boundaries = [
