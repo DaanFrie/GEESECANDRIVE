@@ -2,7 +2,7 @@ import { Actor, Vector, CollisionType } from "excalibur";
 import { Resources } from './resources.js';
 
 export class Enemy extends Actor {
-    constructor(speed = 650) {
+    constructor(speed = 450) {
         super({
             pos: new Vector(655, 750),
             scale: new Vector(0.24, 0.24),

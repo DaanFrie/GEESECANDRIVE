@@ -1,4 +1,4 @@
-import { Scene, Label, TextAlign, Color, Timer, Vector } from 'excalibur';
+import { Scene, Vector } from 'excalibur';
 import { PlayerGoose } from './playerGoose.js';
 import { Background } from './background.js';
 import { Enemy } from './enemy.js';
@@ -6,6 +6,7 @@ import { Boundary } from './boundary.js';
 import { FinishLineBoundary } from './finishLineBoundary.js';
 import { WhiteLine } from './whiteLine.js';
 import { FinishLine } from './finishLine.js';
+import { Game } from './game.js';
 
 export function createMainScene(engine) {
     const mainScene = new Scene(engine);
@@ -80,36 +81,26 @@ export function createMainScene(engine) {
 
     boundaries.forEach(boundary => mainScene.add(boundary));
 
-    let currentTime = 0;
-
-    const timerLabel = new Label({
-        pos: new Vector(800, 800),
-        text: 'Time: 0',
-        fontFamily: 'Arial',
-        scale: new Vector(3, 3),
-        color: Color.White,
-        textAlign: TextAlign.Center
+    mainScene.on('initialize', () => {
+        engine.startTimer();
     });
 
-    mainScene.add(timerLabel);
-
-    const timer = new Timer({
-        fcn: () => {
-            currentTime++;
-            timerLabel.text = `Time: ${currentTime}s`;
-        },
-        interval: 1000,
-        repeats: true
+    mainScene.on('activate', () => {
+        Game.currentTime = 0;
+        engine.startTime = Date.now();
     });
 
-    mainScene.add(timer);
-
-    timer.start();
-
-    mainScene.on('exit', () => {
-        timer.stop();
+    mainScene.on('deactivate', () => {
+        engine.stopTimer(); // Stop de timer wanneer de MainScene wordt gedeactiveerd
     });
 
+    finishLineBoundary.on('collisionstart', () => {
+        const elapsedTime = engine.stopTimer(); // Stop de timer wanneer de speler de finishlijn bereikt
+        engine.updateHighscore(elapsedTime); // Update de highscore
+        engine.goToScene('win', elapsedTime); // Geef de verstreken tijd door naar de Win-scene
+    });
 
     return mainScene;
 }
+
+

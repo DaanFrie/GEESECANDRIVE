@@ -1,16 +1,17 @@
-import { FinishLineBoundary } from './finishLineBoundary.js'; 
+import { FinishLineBoundary } from './finishLineBoundary.js';
 import { Actor, Vector, Keys, CollisionType } from 'excalibur';
 import { Resources } from './resources.js';
 import { Boundary } from './boundary.js';
 
 export class PlayerGoose extends Actor {
-    constructor() {
+    constructor(game) {
         super({
             pos: new Vector(540, 750),
             scale: new Vector(0.24, 0.24),
             rotation: Math.PI / 2
         });
 
+        this.game = game; // Bewaar een referentie naar de Game-instantie
         this.maxSpeed = 650;
         this.acceleration = 18;
         this.deceleration = 10;
@@ -20,7 +21,7 @@ export class PlayerGoose extends Actor {
     }
 
     onPreUpdate(engine) {
-        const mainScene = this.scene; 
+        const mainScene = this.scene;
 
         let xspeed = this.vel.x;
         let yspeed = this.vel.y;
@@ -62,6 +63,7 @@ export class PlayerGoose extends Actor {
             this.pos.y < finishLineBoundary.pos.y + finishLineBoundary.height &&
             this.pos.y + this.height > finishLineBoundary.pos.y
         ) {
+            // this.game.stopTimer();
             engine.goToScene('win');
         }
 
