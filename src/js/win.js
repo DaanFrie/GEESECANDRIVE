@@ -73,9 +73,12 @@ export class Win extends Scene {
         const highscore = parseFloat(localStorage.getItem('highscore'));
 
         // Controleer of er een eerdere highscore is opgeslagen en of de huidige tijd lager is
+        
         if (!isNaN(highscore) && time < highscore) {
+            console.log(highscore);
             localStorage.setItem('highscore', time.toString());
             this.highscoreLabel.text = `Highscore: ${time.toFixed(3)}`;
+            console.log(highscore);
         }
     }
 
