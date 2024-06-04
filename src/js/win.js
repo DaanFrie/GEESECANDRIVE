@@ -68,6 +68,8 @@ export class Win extends Scene {
     }
 
     onActivate() {
+        
+        
         const time = this.engine.currentTime;
         console.log(time);
         const highscore = parseFloat(localStorage.getItem('highscore'));

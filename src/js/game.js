@@ -10,7 +10,7 @@ export class Game extends Engine {
         super({
             width: 925,
             height: 725,
-            maxFps: 60,
+            maxFps: 120,
             displayMode: DisplayMode.FitScreen
         });
 
